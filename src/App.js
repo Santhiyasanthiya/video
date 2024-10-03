@@ -5,56 +5,46 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [videoVisible, setVideoVisible] = useState(true); // Control video visibility
 
-  // Detect print screen or developer tools
   useEffect(() => {
+    // For desktop controls
     const handleKeydown = (e) => {
       if (e.key === 'PrintScreen' || (e.ctrlKey && e.shiftKey && e.key === 'I') || e.key === 'F12') {
-        alert('Screenshot is disabled!');
-        setShowModal(true); // Show warning modal
-        setVideoVisible(false); // Hide video
+        alert('Screenshot and Developer Tools are disabled!');
+        setShowModal(true);
         e.preventDefault();
       }
     };
-
+  
     const handleCopyAttempt = () => {
-      setShowModal(true); // Show warning modal
-      setVideoVisible(false); // Hide video
+      alert('Copying is disabled!');
+      setShowModal(true);
     };
-
+  
     const handleContextMenu = (e) => {
       alert('Right-click is disabled!');
-      setShowModal(true); // Show warning modal
-      setVideoVisible(false); // Hide video
-      e.preventDefault(); // Prevent right-click
+      e.preventDefault();
     };
-
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        alert('Screen recording or screenshot detected!');
-        setShowModal(true); // Show warning modal
-        setVideoVisible(false); // Hide video when user switches tabs or minimizes
-      }
-    };
-
+  
     window.addEventListener('keydown', handleKeydown);
     window.addEventListener('copy', handleCopyAttempt);
     window.addEventListener('contextmenu', handleContextMenu);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
+  
     return () => {
       window.removeEventListener('keydown', handleKeydown);
       window.removeEventListener('copy', handleCopyAttempt);
       window.removeEventListener('contextmenu', handleContextMenu);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 
   // Mobile-specific controls: hide content on certain interactions
   useEffect(() => {
     const handleTouchStart = (e) => {
-      alert('Touch actions like screenshots are not allowed!');
-      setShowModal(true); // Show warning modal
-      setVideoVisible(false); // Hide video on touch interactions
+      // You may want to restrict only on multiple fingers (suspicious behavior)
+      if (e.touches.length > 1) {
+        alert('Touch actions like screenshots are not allowed!');
+        setShowModal(true); // Show warning modal
+        setVideoVisible(false); // Hide video on suspicious touch interactions
+      }
     };
 
     const handleOrientationChange = () => {

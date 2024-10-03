@@ -1,22 +1,45 @@
-.App {
-  text-align: center;
-}
-.video-container {
+.video-background {
   position: relative;
-  width: 900px; /* Adjust width as needed */
-  height: 500px; /* Adjust height as needed */
+  width: 100%;
+  height: auto;
 }
 
-.video-container video {
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  background: rgba(0, 0, 0, 0.1); /* Slight overlay to obstruct recording */
+  z-index: 1;
+  pointer-events: none; /* To allow video controls */
 }
 
-.watermark {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 24px;
-  pointer-events: none; /* Prevents interaction with the watermark */
+
+/* For tablets (landscape or portrait mode) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .video-background {
+    height: 80vh;
+  }
+}
+
+/* For mobile devices (portrait mode) */
+@media (max-width: 767px) {
+  .video-background {
+    height: 60vh;
+  }
+}
+
+/* For small mobile devices (e.g., iPhone SE) */
+@media (max-width: 480px) {
+  .video-background {
+    height: 50vh;
+  }
+}
+
+/* For larger screens (desktops) */
+@media (min-width: 1025px) {
+  .video-background {
+    height: 80vh;
+  }
 }
